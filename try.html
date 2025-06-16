@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche Ownership Services</title>
+    <style>
+        html {
+            --gold: #e9d285;
+            --gold-light: #ebdcb0;
+            --gold-dark: #ebdba8;
+            --black: #151414;
+            --dark: #121212;
+            --gray: #2a2a2a;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat';
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+            padding-top: 100px;
+        }
+        
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+           
+            opacity: 0.9;
+        }
+        
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.85);
+            z-index: -1;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat';
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #efd991;
+        }
+        
+        header {
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.85));
+            padding: 1rem 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 166, 66, 0.2);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav a {
+            color: #edcd7c;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            position: relative;
+            text-transform: uppercase;
+        }
+        
+        .services-header {
+            padding: 8rem 5% 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .services-header p {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 6rem;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+        
+        .service-card {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 4px;
+            padding: 2.5rem;
+            border-left: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 30, 30, 0.8);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-card ul {
+            padding-left: 1.2rem;
+        }
+        
+        .service-card li {
+            margin-bottom: 0.8rem;
+            font-weight: 300;
+        }
+        
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .payment-method {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 8px;
+            padding: 2rem;
+            border-top: 4px solid var(--gold);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payment-method.selected {
+            background: rgba(233, 210, 133, 0.1);
+            border: 2px solid rgb(233, 220, 148);
+        }
+        
+        .payment-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: rgb(242, 228, 151);
+        }
+        
+        .payment-method h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .payment-method p {
+            margin-bottom: 1rem;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .payment-details {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(197, 166, 66, 0.2);
+        }
+        
+        .payment-details.active {
+            display: block;
+        }
+        
+        .proceed-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--gold);
+            color: black;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .proceed-btn:hover {
+            background-color: rgb(196, 188, 142);
+        }
+        
+        .proceed-btn:disabled {
+            background-color: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .payment-icon img {
+            width: 60px;
+            height: 40px;
+            object-fit: contain;
+            filter: brightness(0) invert(0.8);
+        }
+        
+        @media (max-width: 992px) {
+            .services-header h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .services-header {
+                padding: 6rem 5% 3rem;
+            }
+            
+            .services-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .video-background video {
+                filter: blur(5px);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .services-header h1 {
+                font-size: 2rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="176533-855914675_small.mp4" type="video/mp4">
+            
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <header id="mainHeader">
+        <div class="header-container">
+            <nav>
+                <ul>
+                    <p style="margin-left: -50px;font-size: 20px;">PORSCHE</p>
+                    <br>
+                     <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="testdrive.html">TestDrive</a></li>
+                        <li><a href="flagship%20store.html">Flagship Store</a></li>
+                        <li><a href="try.html">Service</a></li>
+                        <li><a href="experience.html">Experience</a></li>
+                        <li><a href="porschesite.html">Models</a></li>
+                        <li><a href="heritage.html">Heritage</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="services-header">
+        <h1 style="font-size: 80px;">Porsche Ownership Services</h1>
+        <p style="font-size: 35px;">Comprehensive protection plans, premium services, and convenient payment options for your Porsche</p>
+    </section>
+
+    <div class="services-container">
+        
+        <section>
+            <div class="section-title">
+                <h2 style="font-size: 45px;">Porsche Protection Plans</h2>
+                <p style="font-size: 25px;">Extend your peace of mind with our exclusive protection packages</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Extended Warranty</h3>
+                    <ul>
+                        <li>Up to 10 years of factory-backed coverage</li>
+                        <li>Comprehensive component protection</li>
+                        <li>Transferable to future owners</li>
+                        <li>Porsche-trained technicians only</li>
+                        <li>24/7 roadside assistance</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Vehicle Protection</h3>
+                    <ul>
+                        <li>Paint and interior surface protection</li>
+                        <li>Alloy wheel and tire coverage</li>
+                        <li>Windshield protection plan</li>
+                        <li>Key replacement coverage</li>
+                        <li>Ceramic coating options</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Prepaid Maintenance</h3>
+                    <ul>
+                        <li>Lock in today's service prices</li>
+                        <li>Factory-recommended intervals</li>
+                        <li>Genuine Porsche parts</li>
+                        <li>Complimentary loaner vehicles</li>
+                        <li>Flexible term options</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        
+        <section>
+            <div class="section-title">
+                <h2 style="font-size: 45px;">Premium Services</h2>
+                <p style="font-size: 25px;">Exceptional care and convenience for your Porsche</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Porsche Connect Services</h3>
+                    <ul>
+                        <li>Real-time vehicle monitoring</li>
+                        <li>Remote vehicle access</li>
+                        <li>Destination send-to-car</li>
+                        <li>Emergency call system</li>
+                        <li>Over-the-air updates</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Exclusive Events</h3>
+                    <ul>
+                        <li>Track day experiences</li>
+                        <li>Driving skill courses</li>
+                        <li>New model previews</li>
+                        <li>Owners' gatherings</li>
+                        <li>Factory tours in Stuttgart</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <h3>Concierge Services</h3>
+                    <ul>
+                        <li>Valet maintenance pickup</li>
+                        <li>Worldwide trip planning</li>
+                        <li>Hotel and restaurant reservations</li>
+                        <li>Event ticket procurement</li>
+                        <li>24/7 personal assistance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+       
+        <section>
+            <div class="section-title">
+                <h2 style="font-size: 45px;">Payment Options</h2>
+                <p style="font-size: 25px;">Select your preferred payment method</p>
+            </div>
+            
+            <div class="payment-options">
+                <div class="payment-method" onclick="selectPayment('gpay')">
+                    <div class="payment-icon">
+                        <img src="google-pay.png" alt="Google Pay">
+                    </div>
+                    <h4>Google Pay</h4>
+                    <p>Fast and secure digital payments</p>
+                    <div class="payment-details" id="gpay-details">
+                        <p>Complete your payment instantly with your Google Pay account</p>
+                        <ul>
+                            <li>Instant confirmation</li>
+                            <li>Secure encryption</li>
+                            <li>No additional fees</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('cash')">
+                    <div class="payment-icon">
+                        <img src="money-bag.png" alt="Cash Payment">
+                    </div>
+                    <h4>Cash Payment</h4>
+                    <p>Pay in person at our dealership</p>
+                    <div class="payment-details" id="cash-details">
+                        <p>Visit any Porsche dealership to complete your payment in cash</p>
+                        <ul>
+                            <li>Immediate confirmation</li>
+                            <li>No transaction fees</li>
+                            <li>Personal assistance</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment('card')">
+                    <div class="payment-icon">
+                        <img src="visa.png" alt="Credit Card">
+                    </div>
+                    <h4>Credit/Debit Card</h4>
+                    <p>Secure online card payment</p>
+                    <div class="payment-details" id="card-details">
+                        <p>Pay with your Visa, MasterCard, or American Express</p>
+                        <ul>
+                            <li>3D Secure authentication</li>
+                            <li>Instant processing</li>
+                            <li>Payment receipts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="proceed-btn" id="proceedBtn" disabled>SELECT PAYMENT METHOD TO PROCEED</button>
+        </section>
+        <br>
+        <br>
+        <br>
+
+        <footer style="background-color: rgba(10, 10, 10, 0.9); padding: 3rem 5%; text-align: center; border-top: 1px solid rgba(197, 166, 66, 0.2);">
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem;">
+                <a href="https://www.instagram.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png" alt="Instagram" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+                <a href="https://twitter.com/Porsche" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_of_Twitter.svg/512px-Logo_of_Twitter.svg.png" alt="Twitter" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+                <a href="https://www.facebook.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/1024px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+            </div>
+            <p style="color: #dbcc9c; font-size: 0.9rem; letter-spacing: 1px; opacity: 0.7;">© 2023 Porsche. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        let selectedPayment = null;
+        
+        function selectPayment(method) {
+            
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            
+            document.querySelectorAll('.payment-details').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            
+            const selectedElement = document.querySelector(`.payment-method[onclick="selectPayment('${method}')"]`);
+            selectedElement.classList.add('selected');
+            document.getElementById(`${method}-details`).classList.add('active');
+            
+            
+            selectedPayment = method;
+            document.getElementById('proceedBtn').disabled = false;
+            document.getElementById('proceedBtn').textContent = `PROCEED WITH ${method.toUpperCase()}`;
+        }
+        
+        document.getElementById('proceedBtn').addEventListener('click', function() {
+            if (selectedPayment) {
+                alert(`You have selected ${selectedPayment.toUpperCase()} as your payment method. Proceeding to payment...`);
+                
+            } else {
+                alert('Please select a payment method first.');
+            }
+        });
+        
+        
+        document.getElementById('proceedBtn').disabled = true;
+        
+        
+    </script>
+</body>
+</html>

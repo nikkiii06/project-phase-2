@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche Flagship Stores | Exclusive Worldwide Locations</title>
+    <style>
+        html {
+            --gold: #e9d285;
+            --gold-light: #d8c690;
+            --gold-dark: #ead48c;
+            --black: #151414;
+            --dark: #121212;
+            --gray: #2a2a2a;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat';
+            color: #e0e0e0;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+            padding-top: 100px;
+        }
+        
+       
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.9;
+        }
+        
+       
+        .content-container {
+            position: relative;
+            z-index: 1;
+            background-color: rgba(22, 20, 20, 0.7);
+        }
+        
+        h1, h2, h3 {
+            font-family: serif;
+            font-weight: 400px;
+            letter-spacing: 1px;
+        }
+        
+        header {
+            background: linear-gradient(to bottom, rgba(24, 21, 21, 0.95), rgba(10, 10, 10, 0.85));
+            padding: 1rem 5%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 166, 66, 0.2);
+        }
+        
+        header.scrolled {
+            padding: 0.5rem 5%;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            padding: 0;
+            margin: 0;
+            
+        }
+        
+        nav a {
+            color: #e9be52;
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            position: relative;
+            text-transform: uppercase;
+            
+        }
+        
+        .flagship-header {
+            padding: 12rem 5% 8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .flagship-header h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            letter-spacing: 3px;
+        }
+        
+        .flagship-header p {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 2px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            position: relative;
+            opacity: 0.9;
+        }
+        
+        .map-container {
+            padding: 6rem 5%;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+            opacity: 0.8;
+        }
+        
+        .world-map {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            border: 1px solid rgba(197, 166, 66, 0.2);
+            box-shadow: 0 20px 50px rgba(218, 168, 74, 0.5);
+            overflow: hidden;
+            background-color: rgba(69, 68, 68, 0.5);
+        }
+        
+        .world-map img {
+            width: 100%;
+            height: auto;
+            filter: grayscale(80%) contrast(110%) brightness(1.7);
+            transition: filter 0.5s ease;
+        }
+        
+        .world-map:hover img {
+            filter: grayscale(60%) contrast(110%) brightness(0.8);
+        }
+        
+        .location-marker {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 2;
+            box-shadow: 0 0 15px rgba(197, 166, 66, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        .location-marker {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: #c5a642; 
+            border-radius: 50%;
+            border: 2px solid #121212; 
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(197, 166, 66, 0.5); 
+        }
+        
+        .location-marker::before {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 1px solid #cfc7ac; 
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            opacity: 0;
+        }
+        
+        .location-info {
+            position: absolute;
+            background: rgba(18, 18, 18, 0.97);
+            padding: 2rem;
+            border-radius: 4px;
+            width: 320px;
+            display: none;
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            
+        }
+        
+        .location-info h3 {
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(197, 166, 66, 0.3);
+            padding-bottom: 0.5rem;
+        }
+        
+        .location-info p {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+        
+        .store-list {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 0 5%;
+        }
+        
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .store-card {
+            border-radius: 4px;
+            padding: 2.5rem;
+            border-left: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(234, 209, 209, 0.2);
+            background-color: rgba(10, 10, 10, 0.6);
+        }
+        
+        .store-card::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(197, 166, 66, 0.03) 0%, transparent 100%);
+            z-index: 0;
+        }
+        
+        .store-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .store-card h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+        }
+        
+        .store-card p {
+            margin-bottom: 0.8rem;
+            font-weight: 300;
+            position: relative;
+            opacity: 0.9;
+        }
+        
+        .store-card strong {
+            font-weight: 400px;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .flagship-header h1 {
+                font-size: 3.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .flagship-header {
+                padding: 8rem 5% 6rem;
+            }
+            
+            .flagship-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .location-info {
+                width: 280px;
+                padding: 1.5rem;
+            }
+            
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .flagship-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .flagship-header p {
+                font-size: 1.1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="176533-855914675_small.mp4"type="video/mp4">
+            
+        </video>
+    </div>
+    
+    
+    <div class="content-container">
+        <header id="mainHeader">
+            <div class="header-container">
+                <nav>
+                      <p style="margin-left: -50px;font-size: 20px;">PORSCHE</p>
+                    <br>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="testdrive.html">TestDrive</a></li>
+                        <li><a href="flagship%20store.html">Flagship Store</a></li>
+                        <li><a href="try.html">Service</a></li>
+                        <li><a href="experience.html">Experience</a></li>
+                        <li><a href="porschesite.html">Models</a></li>
+                        <li><a href="heritage.html">Heritage</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="flagship-header">
+            <h1 style="color: #dbcc9c;">Porsche Exclusive Destinations</h1>
+            <p style="font-size: 27px;">Discover our prestigious flagship stores across the globe, where automotive excellence meets unparalleled luxury.</pst>
+        </section>
+
+        <section class="map-container">
+            <div class="section-title">
+                <h2 style="color: #dbcc9c;">Global Presence</h2>
+                <p style="font-size: 25px;">Locate our most exclusive Porsche destinations worldwide</p>
+            </div>
+            
+            <div class="world-map" id="worldMap">
+                <img src="World_map_-_low_resolution.svg" alt="World Map">
+            </div>
+        </section>
+
+        <section class="store-list">
+            <div class="section-title">
+                <h2 style="color: #dbcc9c;">Flagship Experiences</h2>
+                <p style="font-size: 25px;">Immerse yourself in the world of Porsche at these exceptional locations</p>
+            </div>
+            
+            <div class="store-grid">
+                <div class="store-card">
+                    <h3>Porsche Experience Center, Atlanta</h3>
+                    <p><strong>Address:</strong> One Porsche Drive, Atlanta, GA 30354, USA</p>
+                    <p><strong>Hours:</strong> Mon-Sat: 9AM - 6PM</p>
+                    <p><strong>Phone:</strong> +1 770-290-6000</p>
+                    <p><strong>Features:</strong> Test track, Heritage Gallery, Fine Dining</p>
+                </div>
+                
+                <div class="store-card">
+                    <h3>Porsche Zentrum, Stuttgart</h3>
+                    <p><strong>Address:</strong> Porscheplatz 1, 70435 Stuttgart, Germany</p>
+                    <p><strong>Hours:</strong> Mon-Fri: 8AM - 8PM, Sat: 9AM - 6PM</p>
+                    <p><strong>Phone:</strong> +49 711 911-0</p>
+                    <p><strong>Features:</strong> Factory tour, Museum, Exclusive Events</p>
+                </div>
+                
+                <div class="store-card">
+                    <h3>Porsche Studio, Tokyo</h3>
+                    <p><strong>Address:</strong> 5 Chome-13-12 Minamiaoyama, Minato City, Tokyo</p>
+                    <p><strong>Hours:</strong> Daily: 10AM - 8PM</p>
+                    <p><strong>Phone:</strong> +81 3-5778-9111</p>
+                    <p><strong>Features:</strong> Bespoke Configurations, Lounge, Art Exhibitions</p>
+                </div>
+            </div>
+        </section>
+
+        <footer style="background-color: rgba(10, 10, 10, 0.9); padding: 3rem 5%; text-align: center; border-top: 1px solid rgba(197, 166, 66, 0.2);">
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem;">
+                <a href="https://www.instagram.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="Instagram_icon.png.webp" alt="Instagram" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+                <a href="https://twitter.com/Porsche" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="Logo_of_Twitter.svg.webp" alt="Twitter" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+                <a href="https://www.facebook.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                    <img src="Facebook_f_logo_(2019).svg.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+                </a>
+            </div>
+            <p style="color: #dbcc9c; font-size: 0.9rem; letter-spacing: 1px; opacity: 0.7;">© 2023 Porsche. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            const worldMap = document.getElementById('worldMap');
+            
+            const porscheLocations = [
+                { 
+                    positionX: 23, 
+                    positionY: 45,  
+                    name: "Porsche Experience Center, Atlanta", 
+                    address: "One Porsche Drive, Atlanta, GA 30354", 
+                    phone: "+1 770-290-6000",
+                    features: "Test track, Heritage Gallery, Fine Dining"
+                },
+                { 
+                    positionX: 52, 
+                    positionY: 40, 
+                    name: "Porsche Zentrum, Stuttgart", 
+                    address: "Porscheplatz 1, 70435 Stuttgart", 
+                    phone: "+49 711 911-0",
+                    features: "Factory tour, Museum, Exclusive Events"
+                },
+                { 
+                    positionX: 80, 
+                    positionY: 42, 
+                    name: "Porsche Studio, Tokyo", 
+                    address: "5 Chome-13-12 Minamiaoyama, Tokyo", 
+                    phone: "+81 3-5778-9111",
+                    features: "Bespoke Configurations, Lounge"
+                },
+                { 
+                    positionX: 60, 
+                    positionY: 52, 
+                    name: "Porsche Centre, Dubai", 
+                    address: "Sheikh Zayed Road, Dubai", 
+                    phone: "+971 4 403 9111",
+                    features: "Desert Driving Experience, VIP Lounge"
+                }
+            ];
+            
+            porscheLocations.forEach(function(location) {
+                const markerDot = document.createElement('div');
+                markerDot.className = 'location-marker';
+                
+                markerDot.style.left = location.positionX + '%';
+                markerDot.style.top = location.positionY + '%';
+                
+                const infoBox = document.createElement('div');
+                infoBox.className = 'location-info';
+                infoBox.innerHTML = `
+                    <h3>${location.name}</h3>
+                    <p>${location.address}</p>
+                    <p>${location.phone}</p>
+                    <p>${location.features}</p>
+                `;
+                
+                markerDot.addEventListener('mouseenter', function() {
+                    infoBox.style.display = 'block';
+                    markerDot.style.width = '18px';
+                    markerDot.style.height = '18px';
+                });
+                
+                markerDot.addEventListener('mouseleave', function() {
+                    infoBox.style.display = 'none';
+                    markerDot.style.width = '14px';
+                    markerDot.style.height = '14px';
+                });
+                
+                markerDot.appendChild(infoBox);
+                worldMap.appendChild(markerDot);
+            });
+        });
+    </script>
+</body>
+</html>

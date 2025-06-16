@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porsche Heritage Timeline</title>
+    <style>
+        :root {
+            --porsche-red: rgb(148, 144, 144);
+            --dark-bg: #121212;
+            --text-light: rgba(255, 255, 255, 0.9);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Porsche Next', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Porsche Next';
+            src: url('https://files.porsche.com/fonts/PorscheNext-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        
+        .top-nav {
+            width: 100%;
+            background: rgba(20, 20, 20, 0.95);
+            padding: 2px 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            min-height: 36px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .menu-container {
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+        }
+
+        .menu-icon span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: white;
+            margin-bottom: 4px;
+            transition: all 0.3s;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            min-width: 160px;
+        }
+
+        .dropdown-content a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: background 0.3s;
+            font-size: 1rem;
+        }
+
+        .dropdown-content a img {
+            margin-right: 10px;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-container.active .dropdown-content {
+            display: block;
+        }
+
+        .menu-container.active .menu-icon span:nth-child(1) {
+            transform: translateY(8.5px) rotate(45deg);
+        }
+
+        .menu-container.active .menu-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-container.active .menu-icon span:nth-child(3) {
+            transform: translateY(-8.5px) rotate(-45deg);
+        }
+
+        .nav-icon {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: all 0.3s;
+            filter: none;
+            opacity: 1 ;
+            background: none;
+        }
+        .nav-icon:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px #fff);
+        }
+
+        
+        .timeline-nav {
+            width: 250px;
+            background: rgba(20, 20, 20, 0.9);
+            padding: 40px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 60px; 
+        }
+
+        .timeline-nav h1 {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .year-link {
+            display: block;
+            padding: 15px 10px;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .year-link:hover, .year-link.active {
+            color: var(--text-light);
+            border-left: 3px solid var(--porsche-red);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        
+        .timeline-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 40px;
+            margin-top: 60px; 
+        }
+        .model-specs {
+            position: relative;
+        }
+        .model-specs .year-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: var(--porsche-red);
+            font-size: 2.2rem;
+            font-weight: bold;
+            padding: 6px 18px;
+            border-radius: 8px;
+            z-index: 2;
+            pointer-events: none;
+            color: white;
+        }
+        .year-section {
+            min-height: 100vh;
+            padding: 60px -60px;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 1; 
+            transform: translateY(50px);
+            transition: all 0.8s;
+        }
+
+        .year-section.active {
+            opacity: 1;
+            transform: translateY(0);
+            position: var(--porsche-red);
+        }
+
+        .year-section h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--porsche-red);
+        }
+
+        .model-name {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .model-specs {
+            margin-bottom: 30px;
+            max-width: 100%;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .action-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: rgba(213, 0, 28, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: 1px solid whitesmoke(213, 0, 28, 0.5);
+        }
+
+        .action-link:hover {
+            background: var(--porsche-red);
+            transform: translateY(-3px);
+        }
+
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .timeline-nav {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px;
+            }
+            
+            .timeline-content {
+                margin-left: 0;
+                padding: 30px;
+            }
+            
+            .year-section {
+                min-height: auto;
+                padding: 40px 0;
+            }
+        }
+
+       
+        .porsche-img {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            height: 500px; 
+            object-fit: cover;
+            display: block;
+            position: relative;
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 220px; 
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1));
+            z-index: 2;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0 0 10px;
+            pointer-events: none;
+        }
+
+        .year-overlay {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: bold;
+            z-index: 3;
+            padding: 6px 18px;
+            border-radius: 8px;
+            background:transparent(148, 144, 144, 0.7);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="top-nav">
+        <div class="nav-left">
+            <img src="porsche logo.jpg" alt="Porsche Logo" class="logo">
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-icon" id="menuIcon" tabindex="0" aria-label="Open menu" role="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="dropdown-content" id="dropdownContent">
+                     <a href="profile.html" style="width:18px;vertical-align:middle;margin-right:8px;">Profile</a>
+                     <a href="heritage.html" style="width:18px;vertical-align:middle;margin-right:8px;">Heritage</a>
+                     <a href="index.html" style="width:18px;vertical-align:middle;margin-right:8px;">Home</a>
+                     <a href="testdrive.html" style="width:18px;vertical-align:middle;margin-right:8px;">Test Drive</a>
+                     <a href="flagship%20store.html" style="width:18px;vertical-align:middle;margin-right:8px;">flagshipstore</a>
+                     <a href="try.html" style="width:18px;vertical-align:middle;margin-right:8px;">Services</a>
+                     <a href="experience.html" style="width:18px;vertical-align:middle;margin-right:8px;">Experience</a>
+                     <a href="porschesite.html" style="width:18px;vertical-align:middle;margin-right:8px;">Models</a>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <nav class="timeline-nav">
+        <h1>Porsche Heritage</h1>
+        <a href="#1989" class="year-link active">1989</a>
+        <a href="#1990" class="year-link">1990</a>
+        <a href="#1994" class="year-link">1994</a>
+        
+    </nav>
+
+    
+    <main class="timeline-content">
+       
+        <section id="1989" class="year-section active">
+            <div class="model-specs" style="max-width: 80%; position: relative;">
+                
+                <div class="image-overlay">
+                    <span class="year-overlay">Porsche 964<br>1989</span>
+                </div>
+                <img src="car1.jpg" alt="Porsche 964" class="porsche-img">
+                <br>
+                 <p style="font-size: 30px;"> Porsche 964 represented a significant evolution of the 911 series,
+                with only 15% parts commonality with its predecessor. It introduced
+                innovations like power steering, ABS brakes, and Tiptronic automatic transmission.</p>
+
+            </div>
+            <div class="action-links">
+                
+                <a href="https://en.wikipedia.org/wiki/Porsche_911_(964)" class="action-link">Read More</a>
+            </div>
+        </section>
+
+        
+        <section id="1990" class="year-section">
+            <div class="model-specs" style="max-width: 80%; position: relative;">
+                
+                <div class="image-overlay">
+                    <span class="year-overlay">Porsche 964 Evolution<br>1990</span>
+                </div>
+                <img src="car2.webp"alt="Porsche 964 Evolution" class="porsche-img">
+                <br>
+               <p style="font-size: 30px;">The 1990 model year saw refinements to the 964 series, including 
+                improved engine management and suspension tuning. The Carrera 4 
+                became a hallmark of Porsche's all-wheel-drive technology.</p>
+
+            </div>
+            <div class="action-links">
+               
+                <a href="https://en.wikipedia.org/wiki/Porsche_911_(964)" class="action-link">Read More</a>
+            </div>
+        </section>
+
+        
+        <section id="1994" class="year-section">
+            <div class="model-specs" style="max-width: 80%; position: relative;">
+                
+                <div class="image-overlay">
+                    <span class="year-overlay">Porsche 993<br>1994</span>
+                </div>
+                <img src="car3.jpg" alt="Porsche 993" class="porsche-img">
+                <br>
+                <p style="font-size: 30px;">The Porsche 993, introduced in 1994, was the last air-cooled 911. 
+                It featured a new multi-link rear suspension that greatly improved 
+                handling and became one of the most sought-after 911 generations.</p>
+
+            </div>
+            <div class="action-links">
+                
+                <a href="https://en.wikipedia.org/wiki/Porsche_911_(993)" class="action-link">Read More</a>
+            </div>
+        </section>
+        <footer style="background-color: black; padding: 3rem 5%; text-align: center; border-top: 1px solid rgba(220, 219, 215, 0.2);">
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem;">
+            <a href="https://www.instagram.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                <img src="Instagram_icon.png.webp" alt="Instagram" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+            </a>
+            <a href="https://twitter.com/Porsche" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                <img src="Logo_of_Twitter.svg.webp" alt="Twitter" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+            </a>
+            <a href="https://www.facebook.com/porsche/" target="_blank" style="display: inline-block; width: 40px; height: 40px;">
+                <img src="Facebook_f_logo_(2019).svg.png" alt="Facebook" style="width: 100%; height: 100%; object-fit: contain; filter: invert(0.8);">
+            </a>
+        </div>
+        <p style="color: #d4d3cf; font-size: 0.9rem; letter-spacing: 1px; opacity: 0.7;">© 2023 Porsche. All rights reserved.</p>
+    </footer>
+    </main>
+   
+    <script>
+        
+        document.querySelectorAll('.year-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+               
+                document.querySelectorAll('.year-link').forEach(el => el.classList.remove('active'));
+                this.classList.add('active');
+                
+               
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+               
+                document.querySelectorAll('.year-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+               
+                targetSection.classList.add('active');
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        
+        const sections = document.querySelectorAll('.year-section');
+        const navLinks = document.querySelectorAll('.year-link');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        document.getElementById('menuIcon').addEventListener('click', function(event) {
+            event.stopPropagation();
+            document.getElementById('menuContainer').classList.toggle('active');
+        });
+        document.addEventListener('click', function(event) {
+            const menuContainer = document.getElementById('menuContainer');
+            if (!menuContainer.contains(event.target)) {
+                menuContainer.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

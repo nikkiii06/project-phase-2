@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Porsche Rental</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary:white;  
+            --secondary: #000000; 
+            --accent: #1a1a1a;   
+            --text: #ffffff;     
+            --text-light: #cccccc; 
+            --white: #ffffff;
+            --gray: #121212;     
+            --dark-gray: #0a0a0a; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #000000;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin-left: 150px;
+            position: center;
+
+            align-items:center ;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            position: relative;
+            color: var(--white);
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px auto;
+        }
+
+        .btn-primary, .btn-secondary, .btn-book, .btn-explore, .btn-more {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--gray);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(213, 0, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--gray);
+            box-shadow: 0 0 15px rgba(213, 0, 0, 0.5);
+        }
+
+        .btn-book {
+            background: var(--primary);
+            color: var(--gray);
+            padding: 10px 25px;
+            margin-left: 20px;
+        }
+
+        .btn-explore {
+            color: var(--white);
+            border: 2px solid var(--white);
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .btn-explore:hover {
+            background: var(--white);
+            color: var(--secondary);
+        }
+
+        .btn-more {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .btn-more:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+    
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            background:transparent;
+        }
+
+        #navbar.scrolled {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        #navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            color: var(--gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+        }
+
+    
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        #main-header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            color: var(--white);
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .header-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .category-item {
+            background: var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .category-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .parallax-inner {
+            height: 200px;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .category-item h3 {
+            margin: 20px 0 10px;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .category-item p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        
+        #track-day {
+            padding: 100px 0;
+        }
+
+        .highlight-box {
+            background: var(--accent);
+            padding:60px;
+            border-radius:90px;
+            max-width: 500px;
+            text-align: center;
+            position:center;
+           
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid #333;
+        }
+
+        .highlight-box h2 {
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .highlight-box p {
+            color: var(--text-light);
+            margin-bottom:100px;
+        }
+
+        .price-tag {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .vehicle-card {
+            background: var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .vehicle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .vehicle-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge.new {
+            background: #4caf50;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            color: var(--white);
+        }
+
+        .specs {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .specs i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin: 15px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .availability {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        .availability.available {
+            background: rgba(46, 125, 50, 0.2);
+            color: #4caf50;
+        }
+
+        .availability.limited {
+            background: rgba(255, 143, 0, 0.2);
+            color: #ff8f00;
+        }
+
+    
+        #offers {
+            padding: 100px 0;
+        }
+
+        .offer-content {
+            background: var(--accent);
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border: 1px solid #333;
+        }
+
+        .offer-content h2 {
+            text-align: center;
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+
+        .offer-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .offer-highlight {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            margin-right: 30px;
+        }
+
+        .discount {
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .offer-highlight p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .offer-text {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .offer-text ul {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .offer-text li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .offer-text i {
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .location-card {
+            background: var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 1px solid #333;
+        }
+
+        .location-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .location-image {
+            height: 200px;
+            background-position: center;
+            background-size: cover;
+            border-bottom: 1px solid #333;
+        }
+
+        .location-card h3 {
+            margin: 20px 0 10px;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .location-card p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        
+        footer {
+            background:white;
+            color: var(--white);
+            padding: 60px 0 0;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-about {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-about h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-links {
+            flex: 2;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .link-group {
+            flex: 1;
+            min-width: 150px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+        }
+
+        .link-group h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--gray);
+        }
+
+        .link-group ul {
+            list-style: none;
+        }
+
+        .link-group li {
+            margin-bottom: 10px;
+        }
+
+        .link-group a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .link-group a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+    
+        @media (max-width: 992px) {
+            .section-padding {
+                padding: 60px 0;
+            }
+            
+            .header-content h1 {
+                font-size: 3rem;
+            }
+            
+            .offer-details {
+                flex-direction: column;
+            }
+            
+            .offer-highlight {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.3s ease;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+            
+            .btn-book {
+                margin-left: 0;
+                margin-top: 20px;
+            }
+            
+            .header-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .highlight-box, .offer-content {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section-padding {
+                padding: 40px 0;
+            }
+            
+            .header-content h1 {
+                font-size: 2rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            .category-grid, .vehicle-grid, .locations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .discount {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo"><span> PORSCHE</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="testdrive.html">TestDrive</a></li>
+                        <li><a href="flagship%20store.html">Flagship Store</a></li>
+                        <li><a href="try.html">Service</a></li>
+                        <li><a href="experience.html">Experience</a></li>
+                        <li><a href="porschesite.html">Models</a></li>
+                        <li><a href="heritage.html">Heritage</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    
+    <header class="parallax" id="main-header" style="background-image: url('porschebg.avif');">
+        <div class="overlay"></div>
+        <div class="header-content">
+            <h1>Porsche</h1>
+            <p>Experience German engineering at its finest</p>
+            <a href="#models" class="btn-explore">Explore Models <i class="fas fa-chevron-down"></i></a>
+        </div>
+    </header>
+
+
+    <section id="models" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Porsche <span>Models</span></h2>
+            <div class="category-grid">
+                <div class="category-item">
+                    <div class="parallax-inner" style="background-image: url('911 carrera.avif');"></div>
+                    <h3>911 Series</h3>
+                    <p>The iconic sports car</p>
+                    <a href="https://en.wikipedia.org/wiki/Porsche_911" class="btn-more">View Options</a>
+                </div>
+                <div class="category-item">
+                    <div class="parallax-inner" style="background-image: url('taycan.avif');"></div>
+                    <h3>Taycan</h3>
+                    <p>Electric performance</p>
+                    <a href="https://en.wikipedia.org/wiki/Porsche_Taycan" class="btn-more">View Options</a>
+                </div>
+                <div class="category-item">
+                    <div class="parallax-inner" style="background-image: url('cayenne.avif');"></div>
+                    <h3>Cayenne</h3>
+                    <p>Luxury SUV</p>
+                    <a href="https://en.wikipedia.org/wiki/Porsche_Cayenne" class="btn-more">View Options</a>
+                </div>
+                <div class="category-item">
+                    <div class="parallax-inner" style="background-image: url('panamera.avif');"></div>
+                    <h3>Panamera</h3>
+                    <p>Executive sedan</p>
+                    <a href="https://en.wikipedia.org/wiki/Porsche_Panamera" class="btn-more">View Options</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="parallax" id="track-day" style="background-image: url('bgtrack.avif');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="highlight-box">
+                <h2>Track Day Special</h2>
+                <p>Rent a GT3 RS for your next track experience</p>
+                <div class="price-tag">$899<span>/day</span></div>
+                <button class="btn-primary">Book Now</button>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="fleet" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Current <span>Fleet</span></h2>
+            <div class="vehicle-grid">
+                <div class="vehicle-card">
+                    <div class="card-image">
+                        <img src="911turbo.jpg" alt="Porsche 911 Turbo S">
+                        <div class="badge">Popular</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>911 Turbo S</h3>
+                        <div class="specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 640 HP</span>
+                            <span><i class="fas fa-clock"></i> 2.6s 0-60</span>
+                        </div>
+                        <div class="price">$250,000</div>
+                        <div class="availability available">Available Now</div>
+                        <button class="btn-secondary">Reserve</button>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="card-image">
+                        <img src="taycanturbo.jpg" alt="Porsche Taycan Turbo">
+                        <div class="badge new">New</div>
+                    </div>
+                    <div class="card-content">
+                        <h3>Taycan Turbo</h3>
+                        <div class="specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 670 HP</span>
+                            <span><i class="fas fa-clock"></i> 3.0s 0-60</span>
+                        </div>
+                        <div class="price">$ $200,000</div>
+                        <div class="availability available">Available Now</div>
+                        <button class="btn-secondary">Reserve</button>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="card-image">
+                        <img src="cayenneturbo.jpg" alt="Porsche Cayenne Turbo GT">
+                    </div>
+                    <div class="card-content">
+                        <h3>Cayenne Turbo GT</h3>
+                        <div class="specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 631 HP</span>
+                            <span><i class="fas fa-clock"></i> 3.1s 0-60</span>
+                        </div>
+                        <div class="price">$220,000</div>
+                        <div class="availability available">Available Now</div>
+                        <button class="btn-secondary">Reserve</button>
+                    </div>
+                </div>
+                <div class="vehicle-card">
+                    <div class="card-image">
+                        <img src="718spyder.jpg" alt="Porsche 718 Spyder">
+                    </div>
+                    <div class="card-content">
+                        <h3>718 Spyder</h3>
+                        <div class="specs">
+                            <span><i class="fas fa-tachometer-alt"></i> 414 HP</span>
+                            <span><i class="fas fa-clock"></i> 4.2s 0-60</span>
+                        </div>
+                        <div class="price">$120,000</div>
+                        <div class="availability limited">Limited Availability</div>
+                        <button class="btn-secondary">Reserve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="offers" class="parallax" style="background-image: url('porschered.avif');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="offer-content">
+                <h2>Exclusive Porsche Experience</h2>
+                <div class="offer-details">
+                    <div class="offer-highlight">
+                        <span class="discount">40%</span>
+                        <p>Limited Offer</p>
+                    </div>
+                    <div class="offer-text">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Customize your model</li>
+                            <li><i class="fas fa-check-circle"></i> Limited editions-550 A Spyder </li>
+                            <li><i class="fas fa-check-circle"></i> Exclusive flat-12 and flat-6 engine</li>
+                            <li><i class="fas fa-check-circle"></i> Stunning timeless design</li>
+                        </ul>
+                        <button class="btn-primary">Claim </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="locations" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Our <span>Locations</span></h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <div class="location-image" style="background-image: url('losangeles.jpg');"></div>
+                    <h3>Los Angeles</h3>
+                    <p>Downtown Showroom</p>
+                    <a href="https://en.wikipedia.org/wiki/Los_Angeles" class="btn-more">View Inventory</a>
+                </div>
+                <div class="location-card">
+                    <div class="location-image" style="background-image: url('miami.avif');"></div>
+                    <h3>Miami</h3>
+                    <p>South Beach Location</p>
+                    <a href="https://en.wikipedia.org/wiki/Miami" class="btn-more">View Inventory</a>
+                </div>
+                <div class="location-card">
+                    <div class="location-image" style="background-image: url('newyork.avif');"></div>
+                    <h3>New York</h3>
+                    <p>Manhattan Flagship</p>
+                    <a href="https://en.wikipedia.org/wiki/New_York_City" class="btn-more">View Inventory</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3><span> PORSCHE</span></h3>
+                    <p>Premium Porsche service for enthusiasts and professionals. Experience the thrill of driving a Porsche today.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/porsche/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/porsche/"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/Porsche"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Top Locations</h4>
+                        <ul>
+                            <li><a href="#">New York</a></li>
+                            <li><a href="#">London</a></li>
+                            <li><a href="#">Berlin</a></li>
+                            <li><a href="#">Paris</a></li>
+                            <li><a href="#">Dubai</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#">Airport Delivery</a></li>
+                            <li><a href="#">Home Car Service</a></li>
+                            <li><a href="#">Corporate Accounts</a></li>
+                            <li><a href="#">Track Day Packages</a></li>
+                            <li><a href="#">24/7 Support</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>Popular Routes</h4>
+                        <ul>
+                            <li><a href="#">New York - Philadelphia</a></li>
+                            <li><a href="#">London - Birmingham</a></li>
+                            <li><a href="#">Dubai - Abu Dhabi</a></li>
+                            <li><a href="#">Berlin - Munich</a></li>
+                            <li><a href="#">Paris - Lyon</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Porsche Premium. All rights reserved. Not affiliated with Porsche AG.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                });
+            });
+            
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            
+            const parallaxElements = document.querySelectorAll('.parallax');
+            
+            function updateParallax() {
+                parallaxElements.forEach(element => {
+                    const rect = element.getBoundingClientRect();
+                    const scrollPosition = window.pageYOffset;
+                    const elementPosition = rect.top + scrollPosition;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (scrollPosition + windowHeight > elementPosition && scrollPosition < elementPosition + rect.height) {
+                        const speed = 0.3;
+                        const yPos = -(scrollPosition - elementPosition) * speed;
+                        element.style.backgroundPositionY = yPos + 'px';
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateParallax);
+            window.addEventListener('resize', updateParallax);
+            
+    
+            updateParallax();
+            
+            
+            const vehicleCards = document.querySelectorAll('.vehicle-card');
+            
+            vehicleCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.card-image img').style.transform = 'scale(1.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.card-image img').style.transform = 'scale(1)';
+                });
+            });
+            
+    
+            document.querySelector('.footer-bottom p').innerHTML = `&copy; ${new Date().getFullYear()} Porsche Premium Rentals. All rights reserved. Not affiliated with Porsche AG.`;
+        });
+    </script>
+</body>
+</html>
